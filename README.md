@@ -9,6 +9,8 @@ The trajectory control is achieved using **Kinematic Prescribed Performance Cont
 * **Singularity Awareness:** Uses the Moore-Penrose pseudo-inverse to navigate kinematic configurations.
 * **Formation Scalability:** The leader-follower architecture allows for easy expansion to more agents or different shapes.
 
+![Olympic Rings Trajectory](trajectory.png)
+
 ## 1. Network Topology (Leader-Follower)
 
 The system consists of 5 agents (1 Leader + 4 Followers). The Leader traces the central circular trajectory, while the Followers track the trajectory of their respective preceding agent, adding a constant spatial offset $\Delta_{ij}$.
@@ -86,6 +88,4 @@ $$
 
 ## 5. Visualizing the Result
 
-Upon execution, the script generates the following trajectory plot. The asterisk ($*$) indicates the starting position.
-
-![Olympic Rings Trajectory](trajectory.png)
+Upon execution, the script generates the trajectory plot. The asterisk ($*$) indicates the starting position.
