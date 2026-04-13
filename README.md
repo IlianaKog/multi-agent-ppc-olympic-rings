@@ -21,7 +21,9 @@ Each agent is modeled as a planar robotic arm with two links of lengths $l_1$ an
 $$q = [\theta_1, \theta_2]^T$$
 
 The position of the end-effector in the Cartesian plane $p(q) = [x, y]^T$ is given by the **Forward Kinematics**:
-$$p(q) = \begin{bmatrix} l_1 \cos(\theta_1) + l_2 \cos(\theta_1+\theta_2) \\ l_1 \sin(\theta_1) + l_2 \sin(\theta_1+\theta_2) \end{bmatrix}$$
+$$
+p(q) = \begin{bmatrix} l_1 \cos(\theta_1) + l_2 \cos(\theta_1+\theta_2) \\ l_1 \sin(\theta_1) + l_2 \sin(\theta_1+\theta_2) \end{bmatrix}
+$$
 
 The relationship between the joint velocities $\dot{q}$ and the end-effector velocity $\dot{p}$ is described by the **Jacobian Matrix** $J(q)$:
 $$\dot{p} = J(q) \dot{q}$$
@@ -42,8 +44,10 @@ Where:
 * **$l$**: Exponential decay rate (convergence speed).
 
 ### Step 3: Error Normalization & Transformation
-The error is normalized as $\xi(t) = e(t)/\rho(t)$. To ensure the error never hits the boundary ($|\xi| < 1$), we use a logarithmic transformation to map the constrained error to an unconstrained space $\epsilon$:
-$$\epsilon = \frac{1}{2} \ln \left( \frac{1 + \xi(t)}{1 - \xi(t)} \right)$$
+The error is normalized as $\xi(t) = e(t)/\rho(t)$. To ensure the error never hits the boundary ($|\xi| < 1$), we use a logarithmic transformation:
+$$
+\epsilon = \frac{1}{2} \ln \left( \frac{1 + \xi(t)}{1 - \xi(t)} \right)
+$$
 
 ### Step 4: Control Signal ($u$)
 The joint velocities are calculated using the Moore-Penrose pseudo-inverse ($J^+$) of the Jacobian:
@@ -58,3 +62,5 @@ Where $k$ is a positive control gain.
 
 ## 5. Visualizing the Result
 Upon execution, the script generates a plot showing the five trajectories. Each trajectory begins at a marked point ($*$) and uses directional arrowheads to indicate the movement direction as the agents converge toward their respective formation offsets.
+
+![Olympic Rings Trajectory](trajectory.png)
