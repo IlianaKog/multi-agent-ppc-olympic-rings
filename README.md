@@ -89,3 +89,5 @@ $$
 ## 5. Visualizing the Result
 
 Upon execution, the script generates the trajectory plot. The asterisk ($*$) indicates the starting position.
+
+## 6. Future Steps: Collision avoidance, investigate Geometric Deadlock!
