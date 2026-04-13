@@ -141,3 +141,38 @@ plt.ylabel("Y")
 plt.legend()
 plt.grid(True)
 plt.show()
+
+# Position vs. Time
+fig2, (axX, axY) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
+for i in range(5):
+    axX.plot(t_array, history_np[i, :, 0], color=colors[i], label=f'Agent {i}')
+    axY.plot(t_array, history_np[i, :, 1], color=colors[i])
+axX.set_ylabel("Position X"); axX.set_title("Trajectories Over Time"); axX.grid(True)
+axY.set_ylabel("Position Y"); axY.set_xlabel("Time (s)"); axY.grid(True)
+axX.legend(loc='upper right', ncol=2)
+
+# Compact Error Analysis (3x2 Grid)
+fig3, axes = plt.subplots(3, 2, figsize=(12, 10), sharex=True)
+axes = axes.flatten()
+for i in range(5):
+    # Reference reconstruction
+    if i == 0: pref_x = R * np.cos(omega * t_array)
+    elif i == 1: pref_x = history_np[0, :, 0] + delta_10[0]
+    elif i == 2: pref_x = history_np[0, :, 0] + delta_20[0]
+    elif i == 3: pref_x = history_np[1, :, 0] + delta_31[0]
+    elif i == 4: pref_x = history_np[2, :, 0] + delta_42[0]
+
+    error_x = history_np[i, :, 0] - pref_x
+    rho_t = (agents[i].rho0[0] - agents[i].rho_inf[0]) * np.exp(-agents[i].l * t_array) + agents[i].rho_inf[0]
+
+    axes[i].plot(t_array, error_x, color=colors[i], label=f'Error $e_{{x{i}}}(t)$')
+    axes[i].plot(t_array, rho_t, '--', color='red', alpha=0.5, label='Performance Boundaries')
+    axes[i].plot(t_array, -rho_t, '--', color='red', alpha=0.5)
+    axes[i].set_title(f"Agent {i} Bounds"); axes[i].grid(True, linestyle=':')
+    axes[i].legend(loc='upper right', fontsize='xx-small')
+    if i >= 3: axes[i].set_xlabel("Time (s)")
+    if i % 2 == 0: axes[i].set_ylabel("Error (m)")
+
+fig3.delaxes(axes[5])
+plt.tight_layout()
+plt.show()
