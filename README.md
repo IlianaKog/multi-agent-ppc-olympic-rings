@@ -58,6 +58,3 @@ Where $k$ is a positive control gain.
 
 ## 5. Visualizing the Result
 Upon execution, the script generates a plot showing the five trajectories. Each trajectory begins at a marked point ($*$) and uses directional arrowheads to indicate the movement direction as the agents converge toward their respective formation offsets.
-
----
-*Created for the study of Multi-Agent Systems and Nonlinear Control.*
