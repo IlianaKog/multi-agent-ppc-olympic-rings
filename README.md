@@ -5,11 +5,11 @@ This repository features an advanced 3D implementation of a multi-agent robotic 
 ![3D demo](3D_demo.png)
 
 ## Key Technical Enhancements
-* **3D Workspace Integration:** The system controls $x, y,$ and $z$ coordinates, enabling automated **Pen-Up/Pen-Down logic**.
+* **3D Workspace Integration:** The system controls $x$, $y$, and $z$ coordinates, enabling automated **Pen-Up/Pen-Down logic**.
 * **Cascaded Tracking:** Real-world multi-agent behavior where followers track the actual physical position of their leaders rather than a virtual reference.
 * **Inverse Kinematics Initialization:** Automatic calculation of initial joint states $q_0$ based on custom Cartesian starting points.
 * **Collision Diagnostics:** Real-time monitoring of Tip-to-Tip, Elbow-to-Elbow, and Tip-to-Elbow distances across all 10 agent pairs.
-* **Geometric Safety:** Optimized link lengths (0.7m) providing a mathematical guarantee against elbow collisions.
+* **Geometric Safety & Base Placement:** Bases are strategically positioned at the ring centers, and link lengths are strictly chosen as $l_1 = 0.7$ m and $l_2 = 0.7$ m to provide a mathematical guarantee against collisions.
 
 ---
 
@@ -21,8 +21,11 @@ $$
 q = [\theta_1, \theta_2, d_3]^T
 $$
 
+### Base Placement & Geometric Safety
+To maximize reachability and inherently avoid physical interference, the base coordinate $[b_x, b_y, 0]^T$ of each robotic arm is placed exactly at the center of its respective target ring. Additionally, the link lengths were specifically designed as $l_1 = 0.7$ m and $l_2 = 0.7$ m. This combination of center-aligned bases and restricted arm spans geometrically guarantees that elbow-to-elbow and tip-to-elbow collisions are avoided throughout the execution of the formation.
+
 ### Forward Kinematics
-The end-effector position $p(q) = [x, y, z]^T$ relative to the base $[b_x, b_y, 0]^T$ is given by:
+The end-effector position $p(q) = [x, y, z]^T$ relative to the base is given by:
 
 $$
 p(q) = \begin{bmatrix} 
@@ -72,8 +75,8 @@ $$
 ### Network Topology (Cascaded)
 The agents follow a directed communication graph where followers track the **actual** positions of their leaders:
 1.  **Agent 0 (Black):** Leader. Tracks the central circle reference.
-2.  **Agents 1 (Blue) & 2 (Red):** Track Agent 0 with offsets $\Delta_{10}, \Delta_{20}$.
-3.  **Agents 3 (Yellow) & 4 (Green):** Track Agents 1 and 2 respectively with offsets $\Delta_{31}, \Delta_{42}$.
+2.  **Agents 1 (Blue) & 2 (Red):** Track Agent 0 with offsets $\Delta_{10}$ and $\Delta_{20}$.
+3.  **Agents 3 (Yellow) & 4 (Green):** Track Agents 1 and 2 respectively with offsets $\Delta_{31}$ and $\Delta_{42}$.
 
 For any follower $i$ tracking agent $j$, the reference is:
 
@@ -82,8 +85,8 @@ p_{ref, i}(t) = p_j(t) + \Delta_{ij}
 $$
 
 ### Operational Logic
-* **Warm-up ($t < 2s$):** Smooth interpolation from custom start points to the formation's entry point. **Pen-Up** mode ($z = 0.2$m).
-* **Drawing ($t \geq 2s$):** High-speed circular tracking ($R=1.0, \omega=-2.0$). **Pen-Down** mode ($z = 0.0$m).
+* **Warm-up ($t < 2$ s):** Smooth interpolation from custom start points to the formation's entry point. **Pen-Up** mode ($z = 0.2$ m).
+* **Drawing ($t \geq 2$ s):** High-speed circular tracking ($R = 1.0$, $\omega = -2.0$). **Pen-Down** mode ($z = 0.0$ m).
 
 ---
 
@@ -93,7 +96,7 @@ The simulation generates four detailed figures:
 * **3D Workspace:** Visualizes the approach (dashed lines) and the drawing (solid lines) phases.
 * **2D Projection:** A top-down view of the Olympic formation.
 * **Error Envelopes:** Per-agent and per-dimension plots proving that tracking errors remain within $\pm \rho(t)$.
-* **Collision Monitor:** Distance plots for all joint combinations, ensuring safety thresholds (0.15m) are never violated.
+* **Collision Monitor:** Distance plots for all joint combinations, ensuring safety thresholds (0.15 m) are never violated.
 
 ## 5. Implementation Details
 * **Language:** Python 3.x
