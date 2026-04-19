@@ -2,6 +2,8 @@
 
 This repository features an advanced 3D implementation of a multi-agent robotic system. Five robotic agents, modeled as **3-DOF SCARA-type arms**, collaborate to trace the Olympic Games logo. The system utilizes **Cascaded Leader-Follower Topology** and **Prescribed Performance Control (PPC)** to ensure high-precision trajectory tracking in a 3D workspace.
 
+![3D demo](3D_demo.png)
+
 ## Key Technical Enhancements
 * **3D Workspace Integration:** The system controls $x, y,$ and $z$ coordinates, enabling automated **Pen-Up/Pen-Down logic**.
 * **Cascaded Tracking:** Real-world multi-agent behavior where followers track the actual physical position of their leaders rather than a virtual reference.
