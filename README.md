@@ -4,6 +4,8 @@ This repository features an advanced 3D implementation of a multi-agent robotic 
 
 ![3D demo](3D_demo.png)
 
+![3d_z0_image](3d_z0_image.png)
+
 ## Key Technical Enhancements
 * **3D Workspace Integration:** The system controls $x$, $y$, and $z$ coordinates, enabling automated **Pen-Up/Pen-Down logic**.
 * **Cascaded Tracking:** Real-world multi-agent behavior where followers track the actual physical position of their leaders rather than a virtual reference.
